@@ -1,10 +1,12 @@
 import triangleBackground from "../../assets/images/bg-triangle.svg";
-import scissorsIcon from "../../assets/images/icon-scissors.svg";
-import rockIcon from "../../assets/images/icon-rock.svg";
-import paperIcon from "../../assets/images/icon-paper.svg";
+import { listToSelect } from "../../constants/constants";
 import { IconForm } from "../icon/IconForm";
 
-export const Select = () => {
+export const Select = ({
+  handleSelect,
+}: {
+  handleSelect: ({ id, icon }: { id: string; icon: string }) => void;
+}) => {
   return (
     <div className="flex justify-center relative">
       <img
@@ -13,9 +15,19 @@ export const Select = () => {
         className="w-[215px] mt-[50px]"
       />
       <div className="absolute flex justify-center flex-wrap gap-10">
-        <IconForm icon={paperIcon} id="paper" />
-        <IconForm icon={scissorsIcon} id="scissors" />
-        <IconForm icon={rockIcon} id="rock" />
+        {Object.keys(listToSelect).map((key) => (
+          <IconForm
+            key={key}
+            icon={listToSelect[key].icon}
+            id={listToSelect[key].id}
+            onClick={() =>
+              handleSelect({
+                id: listToSelect[key].id,
+                icon: listToSelect[key].icon,
+              })
+            }
+          />
+        ))}
       </div>
     </div>
   );

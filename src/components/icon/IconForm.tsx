@@ -22,9 +22,18 @@ const innerShadowList = {
   [key: string]: string;
 };
 
-export const IconForm = ({ icon, id }: { icon: string; id: string }) => {
+export const IconForm = ({
+  icon,
+  id,
+  onClick,
+}: {
+  icon: string;
+  id: string;
+  onClick: () => void;
+}) => {
   return (
     <div
+      onClick={onClick}
       className={`flex justify-center items-center ${colorList[id]} ${coloredShadowList[id]} rounded-full w-28 h-28`}
     >
       <div
