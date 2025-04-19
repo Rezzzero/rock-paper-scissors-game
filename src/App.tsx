@@ -4,6 +4,7 @@ import { Select } from "./components/game/Select";
 import { RulesModal } from "./components/rules/RulesModal";
 import { Result } from "./components/game/Result";
 import { listToSelect } from "./constants/constants";
+import "./App.css";
 
 function App() {
   const [score, setScore] = useState<number>(
@@ -22,10 +23,14 @@ function App() {
     icon: "",
   });
   const [gameOver, setGameOver] = useState(false);
+  const [toggled, setToggled] = useState(false);
+  const [bonusGame, setBonusGame] = useState(false);
 
   useEffect(() => {
     if (selected.id !== "" && houseSelected.id === "") {
-      const keys = Object.keys(listToSelect);
+      const keys = bonusGame
+        ? Object.keys(listToSelect)
+        : Object.keys(listToSelect).slice(0, 3);
       const randomKey = keys[Math.floor(Math.random() * keys.length)];
       const randomItem = listToSelect[randomKey];
 
@@ -34,7 +39,7 @@ function App() {
         icon: randomItem.icon,
       });
     }
-  }, [selected, houseSelected]);
+  }, [selected, houseSelected, bonusGame]);
 
   useEffect(() => {
     if (gameOver) {
@@ -50,9 +55,24 @@ function App() {
 
   return (
     <>
-      <div className="container mx-auto flex flex-col justify-between h-screen p-5 pb-10">
-        <Score score={score} />
-        {selected.id === "" && <Select handleSelect={setSelected} />}
+      <div className="container mx-auto flex flex-col gap-10 h-screen p-5">
+        <Score score={score} bonusGame={bonusGame} />
+        <div className="self-center flex text-white items-center gap-5 font-semibold">
+          <p>NORMAL</p>
+          <button
+            onClick={() => {
+              setBonusGame(!bonusGame);
+              setToggled(!toggled);
+            }}
+            className={`toggle-btn ${toggled ? "toggled" : ""}`}
+          >
+            <div className="thumb"></div>
+          </button>
+          <p>BONUS</p>
+        </div>
+        {selected.id === "" && (
+          <Select handleSelect={setSelected} bonusGame={bonusGame} />
+        )}
         {selected.id !== "" && (
           <Result
             selected={selected}
@@ -64,12 +84,17 @@ function App() {
         <button
           type="button"
           onClick={() => setOpenRules(true)}
-          className="flex self-center items-center py-2 px-7 border border-gray-400 rounded-md text-sm text-white tracking-widest"
+          className="flex self-center my-auto py-2 px-7 border border-gray-400 rounded-md text-sm text-white tracking-widest"
         >
           RULES
         </button>
       </div>
-      {openRules && <RulesModal closeModal={() => setOpenRules(false)} />}
+      {openRules && (
+        <RulesModal
+          closeModal={() => setOpenRules(false)}
+          bonusGame={bonusGame}
+        />
+      )}
     </>
   );
 }
