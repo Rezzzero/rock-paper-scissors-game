@@ -2,6 +2,7 @@ import triangleBackground from "../../assets/images/bg-triangle.svg";
 import pentagonBackground from "../../assets/images/bg-pentagon.svg";
 import { listToSelect } from "../../constants/constants";
 import { IconForm } from "../icon/IconForm";
+import { useDeviceSize } from "../../hooks/useDeviceSize";
 export const Select = ({
   handleSelect,
   bonusGame,
@@ -9,6 +10,7 @@ export const Select = ({
   handleSelect: ({ id, icon }: { id: string; icon: string }) => void;
   bonusGame: boolean;
 }) => {
+  const { width } = useDeviceSize();
   const list = bonusGame
     ? Object.keys(listToSelect)
     : Object.keys(listToSelect).slice(0, 3).reverse();
@@ -17,13 +19,21 @@ export const Select = ({
       <img
         src={bonusGame ? pentagonBackground : triangleBackground}
         alt="triangle"
-        className="w-[215px] mt-[50px]"
+        className={`w-[215px] mt-[50px] ${
+          bonusGame ? "lg:w-[360px]" : "lg:w-[300px]"
+        } lg:mt-[100px]`}
       />
       {list.map((key, index) => {
         const startAngle = bonusGame ? 270 : 90;
         const total = list.length;
         const angle = (360 / total) * index + startAngle;
-        const radius = bonusGame ? 110 : 90;
+        let radius;
+
+        if (bonusGame) {
+          radius = width > 1024 ? 175 : 110;
+        } else {
+          radius = width > 768 ? 160 : 90;
+        }
 
         return (
           <div

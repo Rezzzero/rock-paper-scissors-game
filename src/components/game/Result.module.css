@@ -52,3 +52,21 @@
     transform: scale(1);
   }
 }
+
+@media screen and (min-width: 1024px) {
+  .firstRipple {
+    width: 350px;
+    height: 350px;
+    top: 75px;
+  }
+
+  .secondRipple {
+    width: 370px;
+    height: 370px;
+  }
+
+  .thirdRipple {
+    width: 400px;
+    height: 400px;
+  }
+}

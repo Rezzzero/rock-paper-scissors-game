@@ -55,7 +55,7 @@ function App() {
 
   return (
     <>
-      <div className="container mx-auto flex flex-col gap-10 h-screen p-5">
+      <div className="container mx-auto flex flex-col items-center gap-10 h-screen p-5 lg:p-10">
         <Score score={score} bonusGame={bonusGame} />
         <div className="self-center flex text-white items-center gap-5 font-semibold">
           <p>NORMAL</p>
@@ -84,7 +84,7 @@ function App() {
         <button
           type="button"
           onClick={() => setOpenRules(true)}
-          className="flex self-center my-auto py-2 px-7 border border-gray-400 rounded-md text-sm text-white tracking-widest"
+          className="flex self-center my-auto py-2 px-7 border border-gray-400 rounded-md text-sm text-white tracking-widest lg:text-lg lg:px-10 lg:border-3 lg:rounded-xl lg:self-end"
         >
           RULES
         </button>
