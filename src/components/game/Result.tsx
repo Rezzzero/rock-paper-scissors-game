@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { IconForm } from "../icon/IconForm";
 import { getResult } from "../../utils/utils";
 import { PlayAgainButton } from "../ui/button/PlayAgainButton";
+import styles from "./Result.module.css";
 
 export const Result = ({
   selected,
@@ -42,11 +43,19 @@ export const Result = ({
   }, [result, setScore]);
 
   return (
-    <div className="flex flex-col">
+    <div className="flex flex-col relative">
       <div className="flex items-center justify-between text-white text-sm font-semibold tracking-widest">
         <div className="flex flex-col items-center justify-between h-[160px]">
           <IconForm icon={selected.icon} id={selected.id} onClick={() => {}} />
           <p>YOU PICKED</p>
+
+          {result === "win" && showResult && (
+            <div className={styles.firstRipple}>
+              <div className={styles.secondRipple}>
+                <div className={styles.thirdRipple} />
+              </div>
+            </div>
+          )}
         </div>
         <div className="flex flex-col items-center justify-between h-[160px]">
           {showHouse ? (
@@ -59,6 +68,14 @@ export const Result = ({
             <div className="w-24 h-24 mt-3 bg-black opacity-10 rounded-full" />
           )}
           <p>THE HOUSE PICKED</p>
+
+          {result === "lose" && showResult && (
+            <div className={styles.firstRipple}>
+              <div className={styles.secondRipple}>
+                <div className={styles.thirdRipple} />
+              </div>
+            </div>
+          )}
         </div>
       </div>
       {result === "win" && showResult && (
